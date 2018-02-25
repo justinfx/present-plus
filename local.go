@@ -1,3 +1,4 @@
+
 // Copyright 2013 The Go Authors.  All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -49,14 +50,14 @@ func main() {
 		}
 	}
 
-	p, err := build.Default.Import(basePkg, "", build.FindOnly)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Couldn't find gopresent files: %v\n", err)
-		fmt.Fprintf(os.Stderr, basePathMessage, basePkg)
-		os.Exit(1)
-	}
-
 	if basePath == "" {
+		p, err := build.Default.Import(basePkg, "", build.FindOnly)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Couldn't find gopresent files: %v\n", err)
+			fmt.Fprintf(os.Stderr, basePathMessage, basePkg)
+			os.Exit(1)
+		}
+		
 		basePath = p.Dir
 
 		tmpDir := filepath.Join(basePath, "static", "tmp")
@@ -85,7 +86,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	err = initTemplates(basePath)
+	err := initTemplates(basePath)
 	if err != nil {
 		log.Fatalf("Failed to parse templates: %v", err)
 	}
